@@ -6,6 +6,7 @@ import userRoute from "./routes/userRoute";
 import productRoute from "./routes/productRoute";
 import categoryRoute from "./routes/categoryRoute";
 import { connectDB } from "./utils";
+import orderRoute from "./routes/orderRoute";
 
 // Connect to MongoDB
 connectDB();
@@ -30,9 +31,10 @@ const app = new Elysia()
 
 //  routes
 app.get("/", () => "Server is Up and Running");
-categoryRoute(app);
-productRoute(app);
 userRoute(app);
+productRoute(app);
+orderRoute(app);
+categoryRoute(app);
 
 app.listen(5000);
 console.log(`🦊 Server up at ${app.server?.hostname}:${app.server?.port}`);

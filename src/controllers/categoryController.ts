@@ -36,5 +36,40 @@ export const getSingleCategory = async (params: any) => {
     return catagory;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+export const updateCategory = async (params: any, headers: any, body: any) => {
+  const { success, message } = await verifyToken(headers);
+  if (success) {
+    const currentCategory = await Category.findById(params.id);
+
+    try {
+      const updatedCategory = await Category.findOneAndUpdate(
+        { _id: params.id },
+        body,
+        {
+          new: true,
+        }
+      );
+      return updatedCategory;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return message;
+};
+
+export const deleteCategory = async (headers: any, params: any) => {
+  try {
+    const deletedProduct = await Category.findByIdAndDelete(params?.id);
+    if (!deletedProduct) {
+      return "Category not found!!";
+    }
+    return "Category deleted successfully.";
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

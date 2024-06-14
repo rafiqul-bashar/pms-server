@@ -4,14 +4,14 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name should not be blank."],
-      min: [8, "Name is too short! Enter Fullname."],
+      required: [true, " should not be blank."],
+      min: [8, "is too short! Enter Fullname."],
     },
     email: {
       type: String,
       lowercase: true,
       unique: true,
-      required: [true, "Email can't be blank"],
+      required: [true, "can't be blank"],
       match: [/\S+@\S+\.\S+/, "looks like invalid!"],
       index: true,
     },

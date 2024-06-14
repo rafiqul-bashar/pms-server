@@ -1,8 +1,10 @@
-import { t } from "elysia";
 import { ElysiaApp } from "..";
 import {
   createProduct,
+  deleteProduct,
   getAllProducts,
+  getSingleProduct,
+  updateProduct,
 } from "../controllers/productController";
 
 export default (app: ElysiaApp) => {
@@ -10,15 +12,16 @@ export default (app: ElysiaApp) => {
     .get("/products", async () => {
       return await getAllProducts();
     })
-    .get(
-      "/products/:id",
-      async ({ params: { id }, set }: any) => `product no ${id}`
-    )
-    .post("/products", async (body: any) => {
-      try {
-        return await createProduct(body);
-      } catch (error) {
-        throw error;
-      }
+    .get("/products/:id", async ({ params }) => {
+      return await getSingleProduct(params);
+    })
+    .post("/products", async (body: any, headers: any) => {
+      return await createProduct(body, headers);
+    })
+    .put("/products/:id", async (body: any, headers: any, params: any) => {
+      return await updateProduct(body, headers, params);
+    })
+    .delete("/products/:id", async (headers: any, params: any) => {
+      return await deleteProduct(headers, params);
     });
 };

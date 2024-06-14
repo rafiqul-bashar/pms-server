@@ -21,6 +21,7 @@ export default async function verifyToken(headers: any) {
       token,
       new TextEncoder().encode(secret)
     );
+    console.log(payload);
     if (payload?.exp) {
       return {
         payload,

@@ -31,7 +31,10 @@ export const signIn = async ({ body }: any) => {
     }
 
     //  generate token
-    const token = await new jose.SignJWT({ email: user?.email })
+    const token = await new jose.SignJWT({
+      email: user?.email,
+      id: user?._id,
+    })
       .setProtectedHeader({ alg: "HS256" })
       .setExpirationTime("1d")
       .sign(new TextEncoder().encode(secret));
