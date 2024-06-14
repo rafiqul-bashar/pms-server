@@ -19,7 +19,7 @@ export default (app: ElysiaApp) => {
     .post("/user/me", async (headers: any) => {
       return refetchUser(headers);
     })
-    .put("/user/update-profile", async ({ headers, body }: any) => {
+    .patch("/user/update-profile", async ({ headers, body }: any) => {
       return updateProfile(headers, body);
     })
     .post("/user/change-password", async ({ headers, body }: any) => {

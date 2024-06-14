@@ -22,7 +22,7 @@ export const signIn = async ({ body }: any) => {
   try {
     const user = await User.findOne({ email: body?.email });
     if (!user) {
-      return "No user found! Check email or Register an account!";
+      return "No user found!";
     }
 
     const isMatch = await Bun.password.verify(body?.password, user.password);
@@ -42,8 +42,7 @@ export const signIn = async ({ body }: any) => {
     // Save token in user document
     user.token = token;
     await user.save();
-
-    return user;
+    return JSON.stringify(user);
   } catch (error) {
     console.error("Something went wrong!!", error);
     throw error;
@@ -53,7 +52,7 @@ export const refetchUser = async ({ headers }: any) => {
   const { success, message, payload } = await verifyToken(headers);
   if (success) {
     const user = await User.findOne({ email: payload?.email });
-    return user;
+    return JSON.stringify(user);
   }
   return message;
 };
@@ -70,7 +69,7 @@ export const updateProfile = async (headers: any, body: any) => {
           new: true,
         }
       );
-      return updatedUser;
+      return JSON.stringify(updatedUser);
     } catch (error) {
       console.log(error);
     }
